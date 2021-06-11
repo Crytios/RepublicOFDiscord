@@ -18,7 +18,7 @@ class Moderation(commands.Cog):
   
   def __init__(self, bot):
     self.bot = bot
-  @commands.command(brief="Set Blacklist Words")
+  @commands.command(brief="Set Blacklist Words Usage- +setblword <word>")
   @commands.has_permissions(kick_members=True)
   async def setblword(self,ctx, word = None):
    if not word:
@@ -36,7 +36,7 @@ class Moderation(commands.Cog):
          bl_words.append(word)
          await ctx.send("Added")
 
-  @commands.command(brief = "Used to kick members out of a server")
+  @commands.command(brief = "Used to kick members out of a server Usage- +kick @member <reason>")
   @commands.has_permissions(kick_members=True)
   async def kick(self, ctx, member: discord.Member = None, *, reason = "Not Specified"):
 
@@ -60,7 +60,7 @@ class Moderation(commands.Cog):
               
               await member.kick()  
 
-  @commands.command(brief = "Used to ban members from of a server")
+  @commands.command(brief = "Used to ban members from of a server Usage- +ban @member <reason>")
   @commands.has_permissions(ban_members=True)
   async def ban(self, ctx, member: discord.Member = None, reason = "Not Specified"):
 
@@ -88,7 +88,7 @@ class Moderation(commands.Cog):
         
         await member.ban()  
 
-  @commands.command(brief = "Used to kick members out of a server")
+  @commands.command(brief = "Used to kick members out of a server Usage- +unban <username><user discriminator>")
   @commands.has_permissions(ban_members=True)
   async def unban(self, ctx, member, *, reason = "Not Specified"):
     banned_users = await ctx.guild.bans()
@@ -114,7 +114,7 @@ class Moderation(commands.Cog):
         await ctx.send(embed = embed)
 
       
-  @commands.command(brief = "Used to mute people from a server")
+  @commands.command(brief = "Used to mute people from a server Usage- +mute @member <reason>")
   @commands.has_permissions(manage_roles=True)
   async def mute(self, ctx, member: discord.Member = None, reason = "Not Specified"):
 
@@ -164,7 +164,7 @@ class Moderation(commands.Cog):
         embed.set_footer(text = "Mute Command")
 
         await ctx.send(embed = embed)      
-  @commands.command(brief = "Used to unmute people from a server")
+  @commands.command(brief = "Used to unmute people from a server Usage- +unmute @member <reason>")
   @commands.has_permissions(manage_roles=True)
   async def unmute(self, ctx, member: discord.Member = None, reason = "Not Specified"):
 
@@ -215,7 +215,7 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed = embed)      
   
-  @commands.command(brief = "Used to warn people in a server")
+  @commands.command(brief = "Used to warn people in a server Usage- +warn @member <reason>")
   @commands.has_permissions(administrator=True)
   async def warn(self, ctx, member: discord.Member = None, reason = "Not Specified"):
     if bool(wx.get(member.id == User.id)):
@@ -260,7 +260,7 @@ class Moderation(commands.Cog):
 
         if warn_counter >=10:
           await member.ban()
-  @commands.command(brief="Send A message to everyone in a server")
+  @commands.command(brief="Send A message to everyone in a server Usage- +send <message>")
   @commands.has_permissions(kick_members = True)
   async def send(self,ctx,*,msg = None):
     if not msg:

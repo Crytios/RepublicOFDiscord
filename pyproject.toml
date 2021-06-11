@@ -9,6 +9,7 @@ python = "^3.8"
 discord = "^1.0.1"
 tinydb = "^4.4.0"
 toml = "^0.10.2"
+quart = "^0.15.1"
 
 [tool.poetry.dev-dependencies]
 

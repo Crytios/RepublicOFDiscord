@@ -16,20 +16,20 @@ class Giveaway(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
 
-  @commands.command(brief="GiveAway Command")  
+  @commands.command(brief="GiveAway Command Usage- +giveaway <duration in hours> <prize>")  
   @commands.has_permissions(kick_members=True)
   async def giveaway(self,ctx, duration: int, *, prize: str):
     if duration < 30:
       await ctx.send("Duration Has to Be greater Than 30 seconds")
     embed = discord.Embed(title=prize,
-                          description=f"Hosted by - {ctx.author.name}\nReact with :tada: to enter!\nTime Remaining: **{duration}** seconds",
+                          description=f"Hosted by - {ctx.author.name}\nReact with :tada: to enter!\nTime Remaining: **{duration}** hours",
                           color=0xf1c40f)
     print("hi")
     msg = await ctx.channel.send(content=":tada: **GIVEAWAY** :tada:", embed=embed)
     await msg.add_reaction("🎉")
-    await asyncio.sleep(10)
+    
     new_msg = await ctx.channel.fetch_message(msg.id)
-    await asyncio.sleep(duration)
+    await asyncio.sleep(duration*3600)
     user_list = [u for u in await new_msg.reactions[0].users().flatten() if u != self.bot.user] 
 
     if len(user_list) == 0:

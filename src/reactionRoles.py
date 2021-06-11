@@ -22,7 +22,7 @@ class Reaction(commands.Cog):
     self.bot = bot
   def randomCol(arr):
     return np.random.choices(arr)
-  @commands.command(brief="Used to Set Up ReactionRoles")  
+  @commands.command(brief="Used to Set Up ReactionRoles Usage- +setreactionroles <roleid>")  
   @commands.has_permissions(manage_roles = True)
   async def setreactionroles(self, ctx, roleid=None):
           roles.append(roleid)
@@ -31,7 +31,7 @@ class Reaction(commands.Cog):
           roles1 = tuple(roles)
           print(roles1)
 
-  @commands.command(brief="Used to Send the Reaction Roles Message")
+  @commands.command(brief="Used to Send the Reaction Roles Message Usage- +ReactionRoles")
   @commands.has_permissions(manage_roles = True)
   async def ReactionRoles(self,ctx):
       colors = ['blue','red','green','grey','gray']
@@ -70,7 +70,7 @@ class Reaction(commands.Cog):
         ) 
         
 
-  @commands.command(brief="Used to Set the Role The User gets joining the server")
+  @commands.command(brief="Used to Set the Role The User gets joining the server Usage- +setjoinrole <roleid>")
   @commands.has_permissions(manage_roles = True)
   async def setjoinrole(self,ctx,role=None):
     if not role:

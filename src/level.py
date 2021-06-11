@@ -29,7 +29,7 @@ class Level(commands.Cog):
      await message.channel.send(f"**:+1: Congrats @{message.author.name}, You just leveled up to level {level}, :gift: *Enjoy your prize of :coin: 5 ClydeCoin!*")
      cb.update(add('coins', 5),User.id == message.author.id)
 
-  @commands.command(brief="Check Your XP And Level")
+  @commands.command(brief="Check Your XP And Level Usage- +level @member")
   async def level(self, ctx, member:discord.Member = None) :
      if not member:
       if bool(xp.get(ctx.author.id == User.id)):

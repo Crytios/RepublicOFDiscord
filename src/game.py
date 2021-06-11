@@ -67,7 +67,59 @@ shop_dict = {
   41:"Mint -- 1 ClydeCoin",
   42:"Leaf -- 1 ClydeCoin",
   43:"Bread -- 5 ClydeCoin",
-  44:"Pie -- 7 ClydeCoin"
+  44:"Pie -- 7 ClydeCoin",
+  45:"Dagger -- 10 ClydeCoin",
+  46:"Sword --- 10 ClydeCoin",
+  47:"Bludgeon -- 15 ClydeCoin",
+  48:"Battle Axe -- 20 ClydeCoin",
+  49:"Mace -- 25 ClydeCoin",
+  50:"Morning Star -- 25 ClydeCoin",
+  51:"Shortsword -- 25 ClydeCoin",
+  52:"Arming Sword -- 30 ClydeCoin",
+  53:"Falconet --- 290 ClydeCoin",
+  54:"Small Healing Potion -- 5 ClydeCoin",
+  55:"Healing Potion -- 10 ClydeCoin",
+  56:"Full Healing Potion -- 20 ClydeCoin"
+}
+moster_dict = {
+1:"Amphisbaena--15hp--3 damage--tier1",
+2:"Abominable Snowman--30hp--15 damage--tier4",
+3:"Aigamuxa--25hp--19 damage--tier5",
+4:"Amarok--10hp--7 damage--tier2",
+5:"Antmen--5hp--2 damage--tier1",
+6:"Bonnacon--30hp--tier2",
+7:"Bunyip--30hp--13 damage--tier3",
+8:"Camazotz--10hp--4 damage-- tier2",
+8:"Caladrius--30hp-- 8 damage--tier3",
+9:"Cerastes--15hp--4 damage--tier1",
+10:"Chupacabra--15hp--3 damage--tier1",
+11:"Ciguapa--15hp--5 damage--tier2",
+12:"Cretan Bull--20hp--4 damage--tier2",
+13:"Cyclopes--50hp--30 damage--tier5",
+14:"Erymanthian Boar--10hp--3 damage--tier1",
+15:"Fenrir--15hp--3 damage--tier1",
+16:"Gremlins--7hp--2 damage--tier1",
+17:"Grendel--50hp--30 damage--tier5",
+18:"Hecatoncheires--20hp--7 damage--tier4",
+19:"Huitzilopochtli--15hp--8 damage--tier3",
+20:"Kelpie--20hp--8 damage--tier5",
+21:"Kongamato--15hp--3 damage--tier2",
+22:"Krake--30hp--19 damage--tier4",
+23:"Loch Ness Monster--40hp--26 damage--tier5"
+}
+weapon_dict = {
+  1:"Dagger--10 ClydeCoin",
+  2:"Sword--10 ClydeCoin",
+  3:"Bludgeon--15 ClydeCoin",
+  4:"Battle Axe--20 ClydeCoin",
+  5:"Mace--25 ClydeCoin",
+  6:"Morning Star--25 ClydeCoin",
+  7:"Shortsword--25 ClydeCoin",
+  8:"Arming Sword--30 ClydeCoin",
+  9:"Falconet---290 ClydeCoin",
+  10:"Small Healing Potion--5 ClydeCoin",
+  11:"Healing Potion--10 ClydeCoin",
+  12:"Full Healing Potion--20 ClydeCoin"
 }
 global ex
 ex = len(shop_dict)
@@ -84,7 +136,10 @@ class Game(commands.Cog):
   def __init__(self, bot):
     self.bot = bot
     self.thatThingHappened = False
-    
+    self.emoj = ""
+    self.emoj1 = ""
+    self.emoj2 = ""
+    self.emoj3  = ""   
   @commands.command()
   async def game(self, ctx):
    if isinstance(ctx.channel, discord.channel.DMChannel):
@@ -141,26 +196,81 @@ class Game(commands.Cog):
            
            if bool(gb.get(Plot.loc == user_loc)) == False:
               typ = "NONE"
-              
+              image = "not set"
               msg2 = "Plot Owned By Government"
            else:
              owner = gb.get(Plot.loc == user_loc)['owner']
              typ = gb.get(Plot.loc == user_loc)['type']
              msga2 = gb.get(Plot.loc == user_loc)['msg']
+             image = gb.get(Plot.loc == user_loc)['img']
              if typ == "Private":
                msga2= 'This location is marked as strictly private, please do not enter.'
              elif typ == "Road":
                msga2 = "You are on a road."  
            
              msg2 = f"Plot Owner: {owner} Location: ({user_loc[0],user_loc[1]})\n {msga2}" 
+             
 
-            
-
-           return msg2,user_loc,typ
+           return msg2,user_loc,typ,image
            
-    msg = ""
-    msg,user_location,typ = user_locupdate()
+    
     #user_locupdate()
+    msg = ""
+    msg,user_location,typ,image = user_locupdate()
+    '''
+    user_loc_up = [user_loc[0],user_loc[1]+1]
+    
+    if bool(gb.get(Plot.loc == user_loc_up)) == False:
+      self.emoj = "<:green_square:847743058766331924>"
+      
+    else:  
+      
+      typ = gb.get(Plot.loc == user_loc_up)['type']  
+      print(typ)
+      if typ == "Private":
+          self.emoj = "<:blue_square:847743058766331924>"
+      elif typ == "Store":
+          print("ji")
+          self.emoj = "<:red_square:847743058766331924>"
+      elif typ == "Road":
+          self.emoj = "<:brown_square:847743058766331924>" 
+    print("ok")
+    user_loc_down = [user_loc[0],user_loc[1]-1]
+    if bool(gb.get(Plot.loc == user_loc_down)) == False:
+        self.emoj1 = "<:green_square:847743058766331924>"
+    else:
+        print("hia")
+        typ = gb.get(Plot.loc == user_loc_down)['type']  
+        if typ == "Private":
+          self.emoj1 = "<:blue_square:847743058766331924>"
+        elif typ == "Store":
+          self.emoj1 = "<:red_square:847743058766331924>"
+        elif typ == "Road":
+          self.emoj1 = "<:brown_square:847743058766331924>"
+         
+    user_loc_left = [user_loc[0]-1,user_loc[1]]
+    if bool(gb.get(Plot.loc == user_loc_left)) == False:
+        self.emoj2 = "<:green_square:847743058766331924>"
+        
+    else:
+      
+      self.emoj2 = "<:green_square:847743058766331924>"
+      typ = gb.get(Plot.loc == user_loc_left)['type']  
+      if typ == "Private":
+          self.emoj2 = "<:blue_square:847743058766331924>"
+      elif typ == "Store":
+          self.emoj2 = "<:red_square:847743058766331924>"
+      elif typ == "Road":
+          self.emoj2 = "<:brown_square:847743058766331924>"      
+    print(self.emoj2)
+     
+           
+    await res.channel.send(f"⠀⠀{self.emoj}\n{self.emoj2}<:slight_smile:851100929234042881><:green_square:847743058766331924>\n⠀⠀{self.emoj1}")
+    '''
+    if bool(gb.get(Plot.loc == user_loc)):
+     typ = gb.get(Plot.loc == user_loc)['type']
+    else:
+      typ  = "" 
     global counter
     counter = 1
     if counter == 1:
@@ -174,24 +284,68 @@ class Game(commands.Cog):
        await res.respond(
          type=4,
          embed = em
-        )  
+        ) 
+          
       else:
-        await res.respond(
-         type=4,
+        if image == "not set":
+          await res.respond(
+          type=4,
          content  =  f"{msg}"
-        )  
+        ) 
+        else:
+          embed = discord.Embed(title="",color=0x336EFF,description=f"**{msg}**")
+          embed.set_image(url=f"{image}")
+          
+          await res.respond(
+          type=4,
+          embed = embed
+         
+        ) 
+        '''
+        count = 1
+        if count % 5 == 0:
+          tier = gb.get(Plot.loc == user_loc)['tier']
+          if tier == "tier1":
+            tier_om = ""
+            while(tier_om != "tier1"):
+              b = len(monster_dict)
+              a = random.randint(1,b)
+              x = monster_dict[a]
+              if x[3] == "tier1":
+                tier_om = "tier1"
+                damage = x[2]
+                health = x[1]
+              else:
+                pass  
+            await res.channel.send(f"A {x[0]} has appeared to fight with you!You currently have 20hp!")
+            '''
+
+
+
        
-  @commands.command(brief = "Used to Claim a Plot And Set the type Of land")
+  @commands.command(brief = "Used to Claim a Plot And Set the type Of land Usage- +claim @member <coords eg 0 1> <type>")
   @commands.has_permissions(kick_members = True)
   async def claim(self,ctx,member:discord.Member = None,coordinates:commands.Greedy[int] = None,typ = None):
-   
+      '''
+      tier = ""
+      if coordinates[0] > -25  and coordinates[0] < 0 and coordinates[1] < 25 and coordinates[1] > 0:
+        tier = "tier1"
+      elif coordinates[0] < 25 and coordinates[0] > 0 and coordinates[1] > -25 and coordinates[1] < 0:
+        tier="tier2"
+      elif coordinates[0] < -25 and coordinates[0] > -50 and coordinates[1] > 25 and coordinates[1] < 50 :
+        tier="tier3"  
+      elif coordinates[0] < -50 and coordinates[0] > -100 and coordinates[1] > 50 and coordinates[1] < 100 :
+        tier="tier4"   
+      else:
+        tier = "tier5"   
+      '''
       if bool(gb.get(Plot.loc == coordinates)):
         await ctx.send("Plot already owned by a User, Use +own to transfer owners")   
       else:
-        gb.insert({'loc':coordinates, 'owner':member.name,'type':typ,'msg':'Not Set By User','id':member.id})
-        await ctx.send(f"Land Given To {member.name} having a type {typ}")   
+        gb.insert({'loc':coordinates, 'owner':member.name,'type':typ,'msg':'Not Set By User','id':member.id,'img':'not set'})
+        await ctx.send(f"Land Given To {member.name} having a type {typ} Located in {tier}")   
 
-  @commands.command(brief="Uset to Transfer ownership of a plot")
+  @commands.command(brief="Uset to Transfer ownership of a plot Usage- +own @member <coords eg 0 1> <type>")
   @commands.has_permissions(kick_members = True) 
   async def own(slef,ctx, member:discord.Member = None, coordinates:commands.Greedy[int] = None, typ = None):
         if  bool(gb.get(Plot.loc == coordinates)) == False:
@@ -202,7 +356,7 @@ class Game(commands.Cog):
 
           await ctx.send(f"Transferred Owner To {member.name}, set type to {typ}")
 
-  @commands.command(brief = "To Set the Message To be Shown When User Lands Into You Plor")
+  @commands.command(brief = "To Set the Message To be Shown When User Lands Into You Plor Usage- +setMsg <coords eg. 0 1> <message>")
   async def setMsg(self,ctx,coordinates:commands.Greedy[int] = None,*,msg = None):
      if isinstance(ctx.channel, discord.channel.DMChannel):
        print(coordinates)
@@ -229,47 +383,23 @@ class Game(commands.Cog):
             buttons_list
           ]
     )  
-  @commands.command(brief="Map For surrounding Plots")   
-  async def map(self,ctx):
-    if isinstance(ctx.channel, discord.channel.DMChannel):
-      user_loc_up = [user_loc[0],user_loc[1]+1]
-      emoj = "<:green_square:847743058766331924>"
-      typ = gb.get(Plot.loc == user_loc_up)['type']  
-      if typ == "Private":
-          emoj = "<:blue_square:847743058766331924>"
-      elif typ == "Shop":
-          print("ji")
-          emoj = "<:red_square:847743058766331924>"
-      elif typ == "Road":
-          emoj = "<:brown_square:847743058766331924>"    
-      user_loc_down = [user_loc[0],user_loc[1]-1]
-      if bool(gb.get(Plot.loc == user_loc_down)):
-        emoj1 = "<:green_square:847743058766331924>"
-      else:
-        typ = gb.get(Plot.loc == user_loc_down)['type']  
-        if typ == "Private":
-          emoj1 = "<:blue_square:847743058766331924>"
-        elif typ == "Shop":
-          emoj1 = "<:red_square:847743058766331924>"
-        elif typ == "Road":
-          emoj1 = "<:brown_square:847743058766331924>"
-      if user_loc[0]  == 0:
-        emoj2 = "<:green_square:847743058766331924>"
-      ''' 
-      user_loc_left = [user_loc[0]-1,user_loc[1]]
-      emoj2 = "<:green_square:847743058766331924>"
-      typ = gb.get(Plot.loc == user_loc_left)['type']  
-      if typ == "Private":
-          emoj2 = "<:blue_square:847743058766331924>"
-      elif typ == "Shop":
-          emoj2 = "<:red_square:847743058766331924>"
-      elif typ == "Road":
-          emoj2 = "<:brown_square:847743058766331924>"      
-        '''        
-      await ctx.send(f"⠀⠀{emoj}\n{emoj1}<:black_medium_square:785776583502856193><:green_square:847743058766331924>\n⠀⠀<:green_square:847743058766331924>")
-      await ctx.send("Green:Government Owned Land, Blue:Private Land,Red: Shop, Brown:Road, Black: Current Location")
-
-  @commands.command(brief="Buy From Plot Shop")
+  @commands.command(brief = "To Set the Image To be Shown When User Lands Into You Plor Usage- +setImg <coords eg. 0 1> <image url>")
+  async def setImg(self,ctx,coordinates:commands.Greedy[int] = None,*,img = None):
+     print("ok")
+     if isinstance(ctx.channel, discord.channel.DMChannel):
+       print(coordinates)
+       print(img)
+       if bool(gb.get(Plot.loc == coordinates)) == False:
+          await ctx.send("*No one owns this property, however, so you can purchase it! Just open a ticket in our server.*")
+       else:
+         a = gb.get(Plot.loc == coordinates)['owner']
+         if a == ctx.author.name:
+           gb.update(set('img',img),Plot.loc == coordinates )  
+           await ctx.send(f":white_check_mark: **The Image was set for your land.***This is what people will see if they come across your land!*__Note: If you would like to make your property private or open a Store, please open a support ticket in our server.__")
+         else:
+           
+           await ctx.send(f":no_entry_sign: **You don’t own this property.** *{a} owns this property. Contact them if you are interested in purchasing it.*")  
+  @commands.command(brief="Buy From Plot Shop Usage- +buy <item>")
   async def buy(self,ctx,*,item = None):
    if not item:
      await ctx.send(":no_entry_sign: **Please enter the name of the item you would like to buy after the command.**\nExample: +buy Zombie Plush") 
@@ -288,10 +418,20 @@ class Game(commands.Cog):
         cb.update(subtract('coins',int(cost)))
         owner = gb.get(Plot.loc == user_loc)['owner']
        
-        cd.update(add('coins',25/100*int(cost)),User.id == "365974173803085826")
+        #cd.update(add('coins',25/100*int(cost)),User.id == "365974173803085826")
+
+        guild = self.bot.get_guild(848895449854902312)
+        print(guild)
+        channel1 = discord.utils.get(guild.text_channels, name="sales")
+        print(channel1)
+        member = discord.utils.get(guild.members, name=f"{owner}")
+        print(member)
+      
+       
+        await channel1.send(f"{member.mention} A User Bought a {item} from Your Shop.")
        else:
          await ctx.send("You Dont Have Enough Money") 
-  @commands.command(brief="Edit Land Type")
+  @commands.command(brief="Edit Land Type Usage- +EditLandType <coords eg. 0 1> <type>")
   @commands.has_permissions(kick_members = True)
   async def EditLandType(self,ctx,coordinates: commands.Greedy[int] = None,typ = None):
     gb.update(set('type',typ),Plot.loc == coordinates)
@@ -299,11 +439,12 @@ class Game(commands.Cog):
 
   @commands.command(brief="View Inventory")
   async def viewInv(self,ctx):
+     counter = 1
      if isinstance(ctx.channel, discord.channel.DMChannel):
        embed = discord.Embed(title=f":shopping_bags: {ctx.author.name}\'s Inventory",description = "Items--")
        a = len(cb.get(User.id == ctx.author.id)['items'])
        for i in cb.get(User.id == ctx.author.id)['items']:
-         counter = 1
+         
          embed.add_field(name=f"**{counter}:**",value=f"**{i}**")
          counter+=1
        await ctx.send(embed = embed)
